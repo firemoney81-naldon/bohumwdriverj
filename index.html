@@ -1,23 +1,679 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+ <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "운전자보험은 음주운전 사고 시에도 보장을 받을 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아닙니다. 대한민국 운전자보험 표준 약관에 따라 음주운전, 무면허운전, 도주 사고는 보장하지 않는 '면책사항'에 해당합니다. 2026년에도 이 기본적인 원칙은 유지되고 있습니다. 음주운전으로 인한 사고는 교통사고처리지원금, 변호사선임비용, 벌금 등 모든 핵심 보장에서 제외됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "음주운전으로 인한 벌금은 운전자보험에서 처리할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "운전자보험의 '벌금' 특약은 일반적인 교통사고(중대법규위반 포함, 단 음주/무면허 제외) 시 법원에서 확정된 벌금액을 보장하는 항목입니다. 음주운전으로 부과된 벌금은 면책 조항에 따라 운전자보험으로 처리할 수 없습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "음주운전을 했더라도 보장되는 예외적인 경우가 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "음주운전 사고의 경우, 운전자 본인이 입원하거나 사망했을 때 지급되는 상해 특약(단, 고의가 아닌 경우) 등 일부 예외적인 특약에서 소극적인 보장이 이루어질 수 있으나, 사고의 핵심인 교통사고처리지원금이나 변호사선임비용은 절대 보장되지 않습니다. 상품별 약관을 반드시 확인해야 합니다."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+      :root {
+        --primary-color: #2A4D69; /* 진한 남색 - 핵심 정보 강조 */
+        --secondary-color: #4B86B4; /* 밝은 남색 - 서브 정보, 버튼 */
+        --accent-color: #A0522D; /* 톤 다운된 브라운/주황 - 경고, 중요사항 */
+        --highlight-color: #E7EFF6; /* 연한 배경 */
+        --text-color: #2D3E50; /* 진한 텍스트 */
+        --bg-light: #F0F4F8; /* 페이지 배경 */
+        --bg-white: #ffffff;
+        --btn-color: #A0522D; /* CTA 버튼 색상 */
+        --btn-hover: #8B4513;
+      }
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        margin:0; padding:0;
+        background-color: var(--bg-light);
+        color: var(--text-color);
+        line-height:1.7;
+      }
+      .container {
+        max-width: 1100px;
+        margin:0 auto;
+        padding:0 20px;
+      }
+      header {
+        background-color: var(--primary-color);
+        padding: 20px 0;
+        text-align: center;
+        color: var(--bg-white);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.8em;
+        font-weight:700;
+      }
+      header h1 a {
+        color: var(--bg-white);
+        text-decoration: none;
+      }
+      .hero {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--bg-white);
+        text-align: center;
+        padding: 90px 20px 40px;
+        border-bottom: 8px solid var(--accent-color); /* 경고 강조 */
+      }
+      .hero h1 {
+        font-size: 3.2em;
+        margin-bottom: 15px;
+        font-weight:700;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      }
+      .hero p {
+        font-size: 1.3em;
+        margin-bottom: 25px;
+        font-weight: 500;
+      }
+      .cta-btn {
+        background-color: var(--btn-color);
+        color: var(--bg-white);
+        padding: 18px 45px;
+        font-size:1.3em;
+        font-weight: bold;
+        border:none;
+        border-radius:50px;
+        cursor:pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        margin-top: 20px;
+      }
+      .cta-btn:hover {
+        background-color: var(--btn-hover);
+        transform: translateY(-3px);
+      }
+
+      /* 정보 입력 폼 섹션 */
+      .form-section {
+        background-color: var(--bg-white);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        margin-top: -50px; /* 히어로 섹션과 겹치게 */
+        position: relative;
+        z-index: 10;
+        margin-bottom: 40px;
+      }
+      .form-section h2 {
+        color: var(--accent-color);
+        text-align: center;
+        margin-bottom: 25px;
+        font-size:2.2em;
+        border-bottom: 2px solid var(--highlight-color);
+        padding-bottom: 15px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+        color: var(--primary-color);
+        font-size: 1.1em;
+      }
+      .form-group input, .form-group select {
+        width: 100%;
+        padding: 14px 12px;
+        margin-bottom: 5px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 1em;
+        background-color: var(--highlight-color);
+        transition: border-color 0.3s;
+      }
+      .form-group input:focus, .form-group select:focus {
+        border-color: var(--secondary-color);
+        outline: none;
+      }
+      .submit-group {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      /* 메인 콘텐츠 섹션 */
+      .content-section {
+        margin: 40px 0;
+        padding: 60px 0;
+      }
+      .content-box {
+        background-color: var(--bg-white);
+        padding: 40px;
+        border-radius:10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+      }
+      .content-section h2 {
+        font-size: 2.4em;
+        color: var(--primary-color);
+        margin-bottom: 35px;
+        font-weight:700;
+        text-align: center;
+        border-bottom: 3px solid var(--accent-color);
+        display: inline-block;
+        padding-bottom: 5px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+      .content-section h3 {
+        font-size: 1.8em;
+        color: var(--secondary-color);
+        margin-top: 40px;
+        margin-bottom: 15px;
+        border-left: 5px solid var(--accent-color);
+        padding-left: 15px;
+        font-weight: 700;
+      }
+      .content-section h4 {
+        font-size: 1.4em;
+        color: var(--primary-color);
+        margin-top: 25px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .content-box p {
+        margin-bottom: 20px;
+        font-size: 1.1em;
+        line-height: 1.8;
+        text-align: justify;
+      }
+      .content-box ul, .content-box ol {
+        padding-left: 20px;
+        margin-bottom: 20px;
+      }
+      .content-box li {
+        margin-bottom: 10px;
+        font-size: 1.05em;
+      }
+
+      /* 키워드 목록 */
+      .keyword-list-title {
+        text-align: center;
+        font-size: 1.5em;
+        color: var(--primary-color);
+        margin-top: 50px;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+      .keyword-grid {
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px 0;
+        border-top: 1px dashed #ccc;
+        border-bottom: 1px dashed #ccc;
+        margin-bottom: 40px;
+      }
+      .keyword-grid li {
+        background-color: var(--highlight-color);
+        color: var(--text-color);
+        padding: 8px 15px;
+        margin: 5px;
+        border-radius: 25px;
+        font-weight: 500;
+        font-size: 0.95em;
+        list-style: none;
+        transition: background-color 0.3s;
+      }
+      .keyword-grid li:hover {
+        background-color: var(--accent-color);
+        color: var(--bg-white);
+      }
+
+      /* 표 스타일 */
+      .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 1.1em;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .styled-table thead tr {
+        background-color: var(--secondary-color);
+        color: var(--bg-white);
+        text-align: left;
+        font-weight: bold;
+      }
+      .styled-table th, .styled-table td {
+        padding: 15px 20px;
+        border: 1px solid #ddd;
+      }
+      .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+      }
+      .styled-table tbody tr:nth-of-type(even) {
+        background-color: var(--highlight-color);
+      }
+      .styled-table tbody tr:last-of-type {
+        border-bottom: 3px solid var(--secondary-color);
+      }
+
+      /* FAQ 스타일 */
+      .faq-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        background-color: var(--bg-white);
+      }
+      .faq-item h3 {
+        cursor:pointer;
+        display:flex;
+        justify-content: space-between;
+        align-items:center;
+        font-size:1.3em;
+        color: var(--primary-color);
+        background-color: var(--highlight-color);
+        padding: 18px 20px;
+        margin: 0;
+        transition: background-color 0.3s;
+        font-weight: 700;
+      }
+      .faq-item h3:hover {
+        background-color: #dbe4f0;
+      }
+      .faq-item h3::after {
+        content: '+';
+        font-size:1.5em;
+        color: var(--secondary-color);
+        transition: transform 0.3s;
+      }
+      .faq-item.active h3::after {
+        content: '-';
+        transform: rotate(180deg);
+        color: var(--accent-color);
+      }
+      .faq-item p {
+        display: none;
+        padding: 15px 20px;
+        color:#555;
+        font-size:1.05em;
+        background-color: var(--bg-white);
+        margin: 0;
+        line-height: 1.7;
+      }
+      .faq-item.active p {
+        display: block;
+      }
+
+      /* 외부 링크 스타일 */
+      .external-links ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .external-links li {
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: var(--highlight-color);
+        border-left: 5px solid var(--secondary-color);
+        border-radius: 4px;
+      }
+      .external-links a {
+        color: var(--primary-color);
+        font-weight: 500;
+        text-decoration: none;
+        font-size: 1.1em;
+      }
+      .external-links a:hover {
+        text-decoration: underline;
+        color: var(--accent-color);
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: var(--bg-white);
+        text-align:center;
+        padding: 40px 20px;
+        font-size:0.95em;
+        margin-top: 50px;
+      }
+      footer a {
+        color: var(--bg-white);
+        text-decoration:none;
+        margin:0 10px;
+      }
+      footer a:hover {
+        text-decoration:underline;
+      }
+
+      /* 반응형 디자인 */
+      @media (max-width:1024px) {
+        .container { max-width: 960px; }
+      }
+      @media (max-width:768px) {
+        .hero h1 { font-size:2.5em; }
+        .hero p { font-size:1.1em; }
+        .cta-btn { padding:15px 30px; font-size:1.1em; }
+        .form-section { padding: 25px; margin-top: -30px; }
+        .form-grid { grid-template-columns: 1fr; }
+        .content-section h2 { font-size: 2em; }
+        .content-section h3 { font-size: 1.5em; }
+        .styled-table th, .styled-table td { padding: 10px 15px; font-size: 0.9em; }
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">운전자보험 음주운전 면책 조항 분석 및 비교</a></h1>
+        </div>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <section class="hero">
+            <div class="container">
+                <h1>⚠️ 운전자보험 음주운전 사고 시 보장은? 2026년 최신 가이드</h1>
+                <p>음주운전은 중대한 법규 위반입니다. 운전자보험의 면책 조항, 벌금, 교통사고처리지원금 등 핵심 보장 내용을 **2026년 최신 법규 및 약관** 기준으로 명확하게 분석합니다.</p>
+                <a href="#quote-form" class="cta-btn">정확한 운전자보험 비교 견적 받기</a>
+            </div>
+        </section>
+
+        <section class="form-section container" id="quote-form">
+            <h2>운전자보험 보장 내용 및 예상 비용 무료 상담 신청</h2>
+            <p style="text-align: center; font-size: 1.1em; color: var(--text-color);">필수 항목을 입력하시고, 음주운전 면책 조항을 포함한 상세한 약관 정보와 보험료 비교 견적을 받아보세요.</p>
+            <form action="#" method="post">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">이름 (필수)</label>
+                        <input type="text" id="name" name="name" placeholder="성함을 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">연락처 (필수)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="예: 010-0000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth">생년월일</label>
+                        <input type="text" id="birth" name="birth" placeholder="6자리 예: 900101">
+                    </div>
+                    <div class="form-group">
+                        <label for="car_type">차량 종류</label>
+                        <select id="car_type" name="car_type">
+                            <option value="">선택</option>
+                            <option value="승용차">승용차</option>
+                            <option value="SUV/RV">SUV/RV</option>
+                            <option value="화물차">화물차 (영업용 면책 확인 필수)</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="coverage_need">필요한 보장 수준</label>
+                        <select id="coverage_need" name="coverage_need">
+                            <option value="">선택</option>
+                            <option value="최소">최소 벌금 보장만</option>
+                            <option value="표준">표준 (변호사/교통사고 처리금 포함)</option>
+                            <option value="최대">최대 보장 (상해, 진단금 등)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="current_insurance">현재 가입 여부</label>
+                        <select id="current_insurance" name="current_insurance">
+                            <option value="없음">없음</option>
+                            <option value="있음">있음 (갱신형/비갱신형 확인)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label for="consult_detail">상담 요청 세부 내용 (음주운전 관련 문의 등)</label>
+                        <textarea id="consult_detail" name="consult_detail" rows="3" placeholder="궁금한 내용을 구체적으로 적어주세요. 예: 음주운전 면책 확인, 벌금 한도 문의 등"></textarea>
+                    </div>
+                    <div class="submit-group">
+                        <button type="submit" class="cta-btn">무료 전문 상담 신청하기</button>
+                        <p style="margin-top: 15px; font-size: 0.9em; color: #888;">상담 신청은 보험 가입 의무가 없습니다. 개인 정보는 상담 목적으로만 사용됩니다.</p>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section class="content-section">
+            <div class="container content-box">
+                <h2>음주운전과 운전자보험의 관계: 면책 조항의 심층 분석</h2>
+                
+                <p><strong>운전자보험 음주운전</strong> 보장 여부는 많은 운전자들이 궁금해하는 핵심 사안입니다. 결론부터 말씀드리자면, 현행법과 모든 보험사의 약관에 따라 **음주운전**으로 인해 발생한 사고는 운전자보험의 **면책(보상 제외)** 사유에 해당합니다. 이는 도로교통법상의 중대한 위반 행위에 대해 보험사가 책임을 지지 않는다는 공익적인 원칙에 기반합니다.</p>
+
+                <p>2026년 보험 약관 및 법규 개정안 검토 결과, 운전자보험의 **음주운전 면책 조항**은 더욱 엄격하게 유지될 전망입니다. 특히, 최근 강화된 음주운전 처벌 기준(윤창호법 이후)에 따라 음주운전 사고에 대한 사회적 책임이 강조되면서, 보험을 통한 보호의 여지는 사실상 완전히 차단되었다고 볼 수 있습니다. 운전자보험의 핵심 보장인 **교통사고처리지원금**, **벌금**, **변호사선임비용** 세 가지 모두 **음주운전 면책** 대상입니다.</p>
+
+                <h3>운전자보험 핵심 면책 사항 3가지</h3>
+                <ol>
+                    <li><strong>음주운전:</strong> 혈중 알코올 농도 $0.03\%$ 이상의 상태에서 운전.</li>
+                    <li><strong>무면허운전:</strong> 면허 취소 또는 정지 상태, 혹은 면허가 없는 상태에서의 운전.</li>
+                    <li><strong>뺑소니/도주:</strong> 사고 후 피해자를 구호하지 않고 현장을 이탈하는 행위.</li>
+                </ol>
+                <p>이러한 면책 조항을 정확히 이해하는 것은 운전자보험 가입의 첫걸음이자, 안전 운전의 가장 기본적인 자세입니다. **음주측정 거부** 행위 역시 음주운전과 동일하게 면책 처리됩니다.</p>
+                
+                <h3>운전자보험 음주운전 관련 키워드 90개 이상 목록 (SEO 및 콘텐츠 확장)</h3>
+                <p class="keyword-list-title">함께 많이 찾는 운전자보험 핵심 키워드</p>
+                <ul class="keyword-grid">
+                    <li>운전자보험</li><li>음주운전 면책</li><li>교통사고처리지원금</li><li>변호사선임비용</li><li>음주운전 벌금</li><li>운전자보험 면책사항</li><li>음주측정 거부 처벌</li><li>무면허운전 보장</li><li>운전자보험 핵심 보장</li><li>음주운전 형사합의금</li><li>대물 대인 벌금 한도</li><li>운전자보험 필요성</li><li>자동차보험 운전자보험 차이</li><li>운전자보험 갱신형 비갱신형</li><li>운전자보험 특약 분석</li><li>2026년 운전자보험 변화</li><li>음주운전 기준</li><li>음주운전 재범 처벌</li><li>법률 비용 보장</li><li>운전자보험 가격 비교</li><li>운전자보험 가입 시기</li><li>운전자보험 필수 요소</li><li>음주운전 합의금</li><li>음주운전 사고 대처</li><li>교통사고처리 특례법</li><li>12대 중과실 면책</li><li>뺑소니 면책</li><li>운전자 상해 보장</li><li>운전자 벌금 대인 대물</li><li>운전자보험 약관</li><li>운전자보험 저렴한 곳</li><li>자율주행차 운전자보험</li><li>운전자보험 가입 조건</li><li>운전자보험 만기환급형</li><li>운전자보험 순수보장형</li><li>운전자보험 고지 의무</li><li>보험사별 운전자보험 비교</li><li>운전자보험 가성비</li><li>음주운전 행정처분</li><li>음주운전 구속 기준</li><li>운전자보험 미가입 사고</li><li>자동차 운전자보험 통합</li><li>운전자보험 필수 가입</li><li>운전자보험 보장 금액</li><li>운전자보험 5년 갱신</li><li>운전자보험 20년 납</li><li>운전자보험 80세 만기</li><li>운전자보험 가입 연령</li><li>운전자보험 여성 남성 차이</li><li>운전자보험 직업 급수</li><li>운전자보험 의무가입</li><li>운전자보험 선택 노하우</li><li>운전자보험 실손보험 차이</li><li>자동차사고 벌금</li><li>음주운전 운전대 교체</li><li>음주운전 동승자 책임</li><li>음주운전 방조 처벌</li><li>음주운전 동승자 보험</li><li>음주운전 법적 책임</li><li>운전자보험 담보 구성</li><li>운전자보험 가입 전 체크리스트</li><li>운전자보험 보험료 절약</li><li>음주운전 사고 시 대처 요령</li><li>운전자보험 가입 후 주의사항</li><li>음주운전 교통사고 발생 시</li><li>음주운전 사고 후유증</li><li>운전자보험 최신 상품</li><li>운전자보험 필수 특약 정리</li><li>운전자보험 벌금 한도 상향</li><li>운전자보험 경찰 조사</li><li>변호사 선임 비용 한도</li><li>경찰 조사 단계 변호사 선임</li><li>중상해 사고 운전자보험</li><li>운전자보험 음주사고 처리</li><li>음주운전 운전자보험 해지</li><li>운전자보험 해지 환급금</li><li>음주운전 후 운전자보험 가입</li><li>운전자보험 재가입</li><li>운전자보험 중도 해지 불이익</li><li>대리운전 중 사고 보험 처리</li><li>음주운전 대리운전 보험</li><li>운전자보험 보장 축소</li><li>운전자보험 면책 범위 확대</li><li>운전자보험 운행 중 사고</li><li>운전자보험 주차 중 사고</li><li>운전자보험 음주운전 합의금</li><li>운전자보험 가족 벌금 보장</li><li>운전자보험 동승자 보장</li>
+                </ul>
+
+                <h3>2026년 운전자보험 주요 보장 비교 표 (음주운전 면책 확인)</h3>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>보장 항목</th>
+                            <th>핵심 내용</th>
+                            <th>음주운전 사고 시 보장 여부</th>
+                            <th>2026년 예상 보장 한도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>교통사고처리지원금</strong></td>
+                            <td>피해자 사망 또는 중상해 시 합의금 지급 (12대 중과실 포함)</td>
+                            <td style="color: var(--accent-color); font-weight: 700;">면책 (보장 불가)</td>
+                            <td>최대 2억 ~ 2억 5천만원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>운전자 벌금 (대인)</strong></td>
+                            <td>확정된 벌금액 보장 (대인 사고 시)</td>
+                            <td style="color: var(--accent-color); font-weight: 700;">면책 (보장 불가)</td>
+                            <td>최대 3,000만원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>운전자 벌금 (대물)</strong></td>
+                            <td>확정된 벌금액 보장 (대물 사고 시)</td>
+                            <td style="color: var(--accent-color); font-weight: 700;">면책 (보장 불가)</td>
+                            <td>최대 500만원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>변호사선임비용</strong></td>
+                            <td>경찰 조사 단계부터 변호사 선임 비용 지원</td>
+                            <td style="color: var(--accent-color); font-weight: 700;">면책 (보장 불가)</td>
+                            <td>최대 5,000만원 ~ 7,000만원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자동차사고 부상치료비</strong></td>
+                            <td>운전자 본인의 부상 등급별 치료비</td>
+                            <td style="color: #4B86B4; font-weight: 700;">면책 원칙 (단, 일부 특약은 고의성 없을 시 소극적 보장 가능)</td>
+                            <td>등급별 차등 지급</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.9em; color: #888; text-align: right;">*상기 보장 금액은 2026년 예상 최대치 기준이며, 보험사 및 상품에 따라 상이할 수 있습니다.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container content-box">
+                <h2>음주운전 사고 시 운전자가 부담해야 하는 법적 책임과 비용</h2>
+                
+                <p><strong>운전자보험 음주운전 면책</strong>이 확고하다는 것은, 음주운전 사고 발생 시 모든 법적/경제적 책임을 운전자 본인이 직접 부담해야 한다는 의미입니다. 이는 형사적 책임, 행정적 책임, 민사적 책임의 세 가지 영역으로 나뉩니다. 운전자보험은 이 세 가지 중 형사적 책임(벌금, 합의금, 변호사 비용)을 대비하는 목적으로 가입하지만, 음주운전 시에는 이 모든 보호막이 사라집니다.</p>
+
+                <h3>1. 형사적 책임 (운전자보험 미적용 영역)</h3>
+                <p>음주운전으로 인한 상해 또는 사망 사고는 특정범죄 가중처벌 등에 관한 법률(특가법)에 따라 가중 처벌됩니다. 2026년에도 이 처벌 기준은 완화될 가능성이 없으며, 중대 사고의 경우 구속 수사가 원칙입니다.</p>
+                <ul>
+                    <li><strong>벌금:</strong> 법원에서 부과하는 벌금은 운전자보험의 벌금 특약으로 절대 충당할 수 없습니다. 상해 사고 시 수천만원의 벌금이 부과될 수 있으며, 이 금액은 자비로 납부해야 합니다.</li>
+                    <li><strong>형사합의금 (교통사고처리지원금):</strong> 피해자와의 형사합의금 역시 운전자보험에서 지급되지 않으므로, 운전자가 직접 사채를 쓰거나 대출을 받아 마련해야 합니다. 중상해나 사망 사고 시 합의금 규모는 매우 클 수 있습니다.</li>
+                    <li><strong>변호사선임비용:</strong> 경찰 조사 초기 단계부터 변호사 선임이 필수적이지만, 이 비용 역시 개인의 몫입니다.</li>
+                </ul>
+                
+                <h3>2. 행정적 책임 (면허 관련)</h3>
+                <p>혈중 알코올 농도에 따른 면허 정지 및 취소 처분은 변함없이 적용됩니다. **음주측정 거부** 시에도 면허 취소 수준의 행정 처분이 내려집니다.</p>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>혈중 알코올 농도</th>
+                            <th>면허 처분</th>
+                            <th>형사 처벌 (특가법 제외)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$0.03\% \sim 0.08\%$ 미만</td>
+                            <td>면허 정지 (1년 이하)</td>
+                            <td>1년 이하 징역 또는 500만원 이하 벌금</td>
+                        </tr>
+                        <tr>
+                            <td>$0.08\% \sim 0.2\%$ 미만</td>
+                            <td>면허 취소</td>
+                            <td>1년 이상 2년 이하 징역 또는 500만원 이상 1천만원 이하 벌금</td>
+                        </tr>
+                        <tr>
+                            <td>$0.2\%$ 이상</td>
+                            <td>면허 취소</td>
+                            <td>2년 이상 5년 이하 징역 또는 1천만원 이상 2천만원 이하 벌금</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>3. 민사적 책임 (자동차보험)</h3>
+                <p>음주운전으로 인한 사고는 자동차보험의 대인/대물 배상도 제한을 받습니다. 보험사가 피해자에게 보험금을 지급하더라도, 보험사가 운전자에게 구상권을 청구하는 '사고 부담금'이 발생합니다.</p>
+                <ul>
+                    <li><strong>대인 사고 부담금:</strong> 운전자가 피해자의 치료비, 보상금 중 최대 수천만원을 보험사에 별도로 납부해야 합니다.</li>
+                    <li><strong>대물 사고 부담금:</strong> 상대 차량이나 재물 피해에 대해 운전자가 최대 수백만원을 보험사에 납부해야 합니다.</li>
+                </ul>
+                <p>따라서, **음주운전**은 운전자보험뿐만 아니라 자동차보험까지 모두 무력화시키며 막대한 경제적 손실을 초래합니다. 운전자보험 가입의 목적은 일반적인 교통사고에 대비하는 것이지, **음주운전**과 같은 고의성 중과실을 방어하기 위함이 아닙니다.</p>
+
+                <h4>음주운전 관련 핵심 키워드 심층 분석</h4>
+                <p>최근 상담 사례를 보면, 많은 분들이 **운전자보험 음주운전** 보장 여부를 문의하면서 **음주운전 벌금 한도 상향**에 대비해야 하는 것 아니냐고 묻습니다. 하지만 앞서 강조했듯이, 음주운전은 보장 대상이 아니므로 벌금 한도 상향은 오히려 일반적인 교통사고를 대비하는 선량한 운전자들에게만 혜택이 돌아가는 조치로 해석해야 합니다. **음주운전 형사합의금** 역시 보험사가 아닌 운전자 본인의 재산을 통해 마련되어야 합니다.</p>
+                
+                <p>특히, **운전자보험 갱신형 비갱신형** 선택 시에도 이 점을 명심해야 합니다. 아무리 좋은 조건의 비갱신형 보험이라도 **음주운전 면책** 조항은 변하지 않기 때문입니다. **운전자보험 특약 분석**을 할 때에도 '대인 대물 벌금' 특약이 음주운전 시 무용지물이라는 사실을 명확히 인지하고, 오직 일반 사고 시의 위험 대비에 집중해야 합니다.</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="container content-box">
+                <h2>올바른 운전자보험 선택 가이드 및 주의사항</h2>
+
+                <p>음주운전 면책 조항 외에도 운전자보험 가입 시 고려해야 할 중요한 요소들이 있습니다. 2026년에는 **운전자보험 보장 범위**가 더욱 세분화되고, **자율주행차 운전자보험**과 같은 새로운 상품도 등장할 것으로 예상됩니다. 중요한 것은 음주운전을 비롯한 면책 사항을 제외한 나머지 위험에 대해 얼마나 실속 있는 보장을 설계하느냐입니다.</p>
+                
+                <h3>운전자보험 가입 시 필수 체크리스트</h3>
+                <ul>
+                    <li><strong>변호사선임비용 보장 범위:</strong> 경찰 조사 단계부터 선임 비용을 지원하는지 확인해야 합니다. 초기 대처가 형량에 결정적인 영향을 미칩니다.</li>
+                    <li><strong>벌금 한도:</strong> 대인 벌금은 최대 $3,000$만원, 대물 벌금은 최대 $500$만원까지 보장하는지 확인하여 법적 최대 금액에 대비해야 합니다.</li>
+                    <li><strong>비갱신형 선택 고려:</strong> 보험료 인상 없이 장기간 보장을 유지하고 싶다면 **비갱신형 운전자보험**을 고려하는 것이 유리합니다.</li>
+                    <li><strong>운전자보험 직업 급수 확인:</strong> 직업에 따라 보험료가 달라지므로 정확한 직업 급수를 고지해야 합니다.</li>
+                </ul>
+
+                <h3>음주운전 후 운전자보험 재가입 문제</h3>
+                <p>만약 과거에 음주운전으로 인해 면허가 취소되었거나 벌금형을 받은 이력이 있다면, **운전자보험 가입 조건**이 매우 까다로워지거나 아예 가입이 거절될 수 있습니다. 보험사는 **운전자보험 고지 의무**에 따라 과거 운전 관련 법규 위반 이력을 심사하기 때문입니다. 특히 음주운전 재범 이력은 보험 가입을 거의 불가능하게 만듭니다. 따라서 깨끗한 운전 이력을 유지하는 것이 가장 중요합니다.</p>
+
+                <p>최근 이슈가 되는 **운전자보험 가족 벌금 보장** 특약도 음주운전 사고에는 적용되지 않습니다. 이 특약은 피보험자(계약자)가 아닌 가족이 운전 중 발생시킨 일반 교통사고 벌금을 보장하는 것이지, 가족의 **음주운전**을 보장하는 것이 아님을 명확히 이해해야 합니다.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container content-box">
+                <h2>자주 묻는 질문 (FAQ)</h2>
+
+                <div class="faq-item">
+                    <h3>운전자보험과 자동차보험의 음주운전 면책은 어떻게 다른가요?</h3>
+                    <p><strong>자동차보험</strong>은 음주운전 사고 시 피해자에게 보상은 하지만, 보험사가 지출한 금액의 일부(대인, 대물 사고 부담금)를 운전자에게 구상권으로 청구합니다. <strong>운전자보험</strong>은 아예 음주운전 사고의 핵심인 벌금, 합의금, 변호사 선임 비용에 대한 보장을 처음부터 '면책'하여 지급하지 않습니다. 두 보험 모두 음주운전을 옹호하거나 방어해주지 않습니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>음주운전으로 벌금형을 받은 후 운전자보험 가입이 가능한가요?</h3>
+                    <p>음주운전 벌금형 이력은 운전자보험 가입 시 주요 심사 대상입니다. 일반적으로 3년 ~ 5년 이내에 벌금형 이력이 있다면 가입이 거절되거나, 가입이 되더라도 보험료가 할증될 수 있습니다. 정확한 가입 가능 여부는 보험사에 **고지 의무**를 이행한 후 심사를 통해 확인해야 합니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>음주운전 중 사고가 났는데, 피해자 치료비는 어떻게 처리되나요?</h3>
+                    <p>피해자 치료비(대인 배상)는 운전자가 가입한 자동차보험에서 우선적으로 지급됩니다. 하지만 보험사는 이후 운전자에게 법적으로 정해진 '사고 부담금'을 청구하며, 운전자는 이 부담금을 자비로 납부해야 합니다. 즉, 피해자 치료비 자체는 자동차보험으로 처리되지만, 운전자는 경제적 책임을 피할 수 없습니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>운전자보험이 꼭 필요한 12대 중과실 사고에는 어떤 것들이 있나요?</h3>
+                    <p>음주운전이 아닌 일반적인 12대 중과실 사고(신호 위반, 중앙선 침범, 속도 위반, 횡단보도 사고, 보도 침범 등)의 경우에 운전자보험의 보장이 매우 중요합니다. 이 경우 교통사고처리지원금, 벌금, 변호사선임비용 특약이 작동하여 운전자의 경제적 부담과 법률적 리스크를 크게 줄여줍니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>운전자보험의 보장이 시작되는 시점은 언제인가요?</h3>
+                    <p>대부분의 운전자보험 특약(벌금, 합의금, 변호사 선임 비용)은 계약 체결 및 1회 보험료 납입이 완료된 '책임 개시일'부터 효력이 발생합니다. 다만, 일부 상해 관련 특약은 일정 기간(90일 등)의 면책 기간이 있을 수 있으니 약관을 확인해야 합니다.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="content-section external-links">
+            <div class="container content-box">
+                <h2>신뢰할 수 있는 외부 자료 및 참고 링크 (음주운전 관련 법규)</h2>
+                <p>운전자보험 음주운전 면책 조항의 근거가 되는 공인된 법령 및 신뢰할 수 있는 자료입니다.</p>
+                <ul>
+                    <li><a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EA%B5%90%ED%86%B5%EB%B2%95" target="_blank" rel="noopener nofollow">대한민국 법제처 | 도로교통법 (음주운전 기준 및 처벌 관련 근거 법령)</a></li>
+                    <li><a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%8A%B9%EC%A0%95%EB%B2%94%EC%A3%84%EA%B0%80%EC%A4%91%EC%B2%98%EB%B2%8C%EB%B2%95" target="_blank" rel="noopener nofollow">대한민국 법제처 | 특정범죄 가중처벌 등에 관한 법률 (특가법) (음주운전 상해/사망 사고 처벌 근거)</a></li>
+                    <li><a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EA%B5%90%ED%86%B5%EC%82%AC%EA%B3%A0%EC%B2%98%EB%A6%AC%20%ED%8A%B9%EB%A1%80%EB%B2%95" target="_blank" rel="noopener nofollow">대한민국 법제처 | 교통사고처리 특례법 (12대 중과실 및 보험 처리 관련 법령)</a></li>
+                    <li><a href="https://www.fss.or.kr/fss/main/index.do" target="_blank" rel="noopener nofollow">금융감독원 (FSS) | 보험 약관 및 소비자 보호 정보 (운전자보험 면책 조항 확인)</a></li>
+                    <li><a href="https://namu.wiki/w/%EC%9A%B4%EC%A0%84%EC%9E%90%20%EB%B3%B4%ED%97%98" target="_blank" rel="noopener nofollow">나무위키 | 운전자 보험 (면책 사항 등 일반 정보 참조)</a></li>
+                </ul>
+                <p>운전자보험 가입 전에는 반드시 금융감독원의 자료나 보험사의 공식 약관을 통해 **음주운전 면책** 조항을 재차 확인하시기 바랍니다.</p>
+            </div>
+        </section>
+
     </main>
-  </body>
+
+    <footer>
+        <div class="container">
+            <p><strong>운전자보험 전문 비교 센터</strong> &copy; 2025 All Rights Reserved. (정보 기준: 2026년 예상 법규 및 약관)</p>
+            <p>
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이용약관</a>
+                <a href="#">문의하기</a>
+            </p>
+            <p>본 사이트는 운전자보험 비교 정보를 제공하며, 음주운전 보장 관련 문의는 각 보험사 약관을 기준으로 합니다.</p>
+        </div>
+    </footer>
+
+    <script>
+      // FAQ 토글 기능
+      document.querySelectorAll('.faq-item h3').forEach(item => {
+        item.addEventListener('click', event => {
+          const parent = item.parentElement;
+          parent.classList.toggle('active');
+        });
+      });
+    </script>
+</body>
 </html>
